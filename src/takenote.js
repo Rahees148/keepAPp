@@ -2,13 +2,11 @@ import React, { Component } from 'react';
 import Paper from '@material-ui/core/Paper';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-// const styles = {
-//   paper: {
-//     maxWidth: 575,
-//     margin:'auto',
-//     padding:15
-//   }
-// };
+const styles = {
+  TakeNote: {
+    padding:'10px'
+  }
+};
 
 export default class TakeNote extends Component  {
   constructor ( props ) {
@@ -28,32 +26,44 @@ export default class TakeNote extends Component  {
   handleTtileChange(event){
     this.setState({title: event.target.value})
   }
+
+  
+
   handleNewNote(event) {
     let obj = {
+      id:  this.props.notes.length + 1,
       title: this.state.title,
       description: this.state.note
     }
     this.props.onNew(obj);
+    this.setState({
+      title: '',
+      note:''
+    });
+    this.setState({expanded:false})
   }
 
   render() {
     return (
       <div>
-        <Paper >
+        <Paper  style={styles.TakeNote}>
           {this.state.expanded ? <TextField
               id="title"
               label="Title"
               margin="normal"
               value={this.state.title}
               fullWidth={true}
+              autoComplete= 'off'
               onChange={this.handleTtileChange.bind(this)}
             />: null}
             <TextField
               id="notes"
               label="Notes"
               margin="normal"
+              required={true}
               value={this.state.note}
               fullWidth={true}
+              multiline={true}
               onChange={this.handleNoteChange.bind(this)}
               onClick={this.handleExpanded.bind(this)}
             />

@@ -4,15 +4,13 @@ import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import Typography from '@material-ui/core/Typography';
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
+import Grid from '@material-ui/core/Grid';
 import TakeNote from './takenote';
 import Notes from './notes';
-import logo from './logo.svg';
 import './App.css';
 const styles = {
   appBar: {
-    marginBottom:'4em'
+    marginBottom:'20px'
   }
 };
 
@@ -41,19 +39,15 @@ class App extends Component {
     });
   }
   handleDeleteNote(item){
-    console.log('in app',item)
+    const deleteUpdateData = this.state.notes.filter(newNotes => newNotes.id !== item.id);
+    this.setState({notes: deleteUpdateData});
   }
 
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <Card >
-        <CardContent>
-        <AppBar position="static" className={styles.appBar.marginBottom}>
+
+        <AppBar position="static" style={styles.appBar}>
           <Toolbar>
             <IconButton color="inherit">
               <MenuIcon />
@@ -63,11 +57,13 @@ class App extends Component {
           </Typography>
           </Toolbar>
         </AppBar>
-
-        <TakeNote onNew={this.addNote.bind(this)}/>
-        <Notes notes={this.state.notes} onDelete={this.handleDeleteNote} />
-        </CardContent>
-        </Card>
+        
+        <Grid  container item spacing={0} justify="center" >
+          <Grid item xs={8}>
+              <TakeNote onNew={this.addNote.bind(this)}  notes={this.state.notes} />
+              <Notes notes={this.state.notes} onDelete={this.handleDeleteNote.bind(this)} />
+          </Grid>
+        </Grid>
       </div>
       
     );

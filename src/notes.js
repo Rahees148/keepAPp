@@ -18,7 +18,7 @@ export default class Notes extends Component  {
     return (
       <Grid container spacing={24} style={styles.gridContainer} >
          { this.props.notes.map( n => 
-         <Grid key={n} item sm={3} >
+         <Grid key={n.id} item sm={3} >
           <Note onDelete={() => onDelete(n)}  value={n} />
         </Grid>
       )}
